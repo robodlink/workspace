@@ -16,33 +16,30 @@ Servo servo2;
 Servo servo3; // New Servo object for the third servo
 Servo servo4; // New Servo object for the fourth servo
 
-
 // single motor control function
-void motor_control(p1,p2){
-  // --- Movement 2: From 110 back to 90 degrees ---
-  //Serial.println("Moving servos from 110 back to 90 degrees...");
-  if(p1 > p2){
+// Corrected function definition: specify types for p1 and p2
+void motor_control(int p1, int p2) { // Changed return type to void as it doesn't return anything
+  // --- Movement: From p1 to p2 degrees ---
+  if (p1 > p2) {
     for (int pos = p1; pos >= p2; pos -= 1) {
       servo1.write(pos);
       servo2.write(pos);
       servo3.write(pos); // Move third servo
       servo4.write(pos); // Move fourth servo
       delay(5); // Fast movement
-  }
-}
-  else if( p2 > p1){
+    }
+  } else if (p2 > p1) {
     for (int pos = p1; pos <= p2; pos += 1) {
       servo1.write(pos);
       servo2.write(pos);
       servo3.write(pos); // Move third servo
       servo4.write(pos); // Move fourth servo
       delay(5); // Fast movement
+    }
   }
-  delay(500); //short pause after movement
+  delay(500); // Short pause after movement
 }
-  
 
- 
 void setup() {
   // Initialize serial communication for debugging
   Serial.begin(115200);
@@ -90,16 +87,19 @@ void setup() {
 }
 
 void loop() {
-  // --- Movement 1: From 90 to 110 degrees ---
-  motor_control(90,125);
+  // --- Movement 1: From 90 to 135 degrees ---
+  Serial.println("Moving servos from 90 to 135 degrees...");
+  motor_control(90, 135);
 
-  // --- Movement 2: From 110 back to 90 degrees ---
-  motor_control(125,90)
+  // --- Movement 2: From 135 back to 90 degrees ---
+  Serial.println("Moving servos from 135 back to 90 degrees...");
+  motor_control(135, 90);
 
-  // --- Movement 3: From 90 to 80 degrees ---
-  motor_control(90,55)
+  // --- Movement 3: From 90 to 55 degrees ---
+  Serial.println("Moving servos from 90 to 55 degrees...");
+  motor_control(90, 55);
 
-  // --- Movement 4: From 80 back to 90 degrees ---
-  motor_control(55,90)
-
+  // --- Movement 4: From 55 back to 90 degrees ---
+  Serial.println("Moving servos from 55 back to 90 degrees...");
+  motor_control(55, 90);
 }
